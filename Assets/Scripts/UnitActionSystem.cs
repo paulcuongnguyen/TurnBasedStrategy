@@ -34,6 +34,7 @@ public class UnitActionSystem : MonoBehaviour
 
             if (selectedUnit == null) return;
             selectedUnit.Move(MouseWorld.GetPosition());
+            Debug.Log("Move to " + MouseWorld.GetPosition());
         }        
     }
 
