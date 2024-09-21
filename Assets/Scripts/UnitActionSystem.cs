@@ -32,10 +32,19 @@ public class UnitActionSystem : MonoBehaviour
             // check if that mouseclick is to select a unit, if it is true, then do not move unit, only move after unit already be selected
             if (TryHandlUnitSelection()) return; 
 
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+            
             if (selectedUnit == null) return;
-            selectedUnit.Move(MouseWorld.GetPosition());
-            Debug.Log("Move to " + MouseWorld.GetPosition());
-        }        
+            if (selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
+            {
+                selectedUnit.GetMoveAction().Move(mouseGridPosition);
+            }
+        } 
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            selectedUnit.GetSpinAction().Spin();
+        }       
     }
 
     private bool TryHandlUnitSelection()
