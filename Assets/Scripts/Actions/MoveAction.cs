@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MoveAction : BaseAction
 {
@@ -46,25 +47,21 @@ public class MoveAction : BaseAction
         {
             unitAnimator.SetBool("isWalking", false);
             isActive = false;
+            onActionComplete();
         }
 
         
 
     }
 
-    public void Move(GridPosition gridPosition)
+    public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
+        this.onActionComplete = onActionComplete;
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
         isActive = true;
     }
-
-    public bool IsValidActionGridPosition(GridPosition gridPosition)
-    {
-        List<GridPosition> validGridPosition = GetValidActionGridPositionList();
-        return validGridPosition.Contains(gridPosition);
-    }
-
-    public List<GridPosition> GetValidActionGridPositionList()
+    
+    public override List<GridPosition> GetValidActionGridPositionList()
     {
         List<GridPosition> validGridPositionsList = new List<GridPosition>();
         GridPosition unitGridPosition = unit.GetGridPosition();
@@ -95,6 +92,11 @@ public class MoveAction : BaseAction
         }
 
         return validGridPositionsList;
+    }
+
+    public override string GetActionName()
+    {
+        return "Move";
     }
 
 }
