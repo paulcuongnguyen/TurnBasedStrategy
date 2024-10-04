@@ -20,15 +20,13 @@ public class UnitActionSystem : MonoBehaviour
     private bool isBusy;
 
     private void Awake()
-    {
-        
+    {        
         if (Instance != null)
         {
             Debug.LogError("There are more than one UnitActionSystem " + transform + " - " + Instance);
             Destroy(gameObject);
             return;
-        }
-        
+        }        
         Instance = this;
     }
 
