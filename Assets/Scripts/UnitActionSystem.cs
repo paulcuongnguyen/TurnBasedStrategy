@@ -39,6 +39,8 @@ public class UnitActionSystem : MonoBehaviour
     {          
         if (isBusy) return;
 
+        if (!TurnSystem.Instance.IsPlayerTurn()) return;
+
         if (EventSystem.current.IsPointerOverGameObject()) return;
         
         // check if that mouseclick is to select a unit, if it is true, then do not move unit, only move after unit already be selected
@@ -94,6 +96,11 @@ public class UnitActionSystem : MonoBehaviour
                     if (unit == selectedUnit)
                     {
                         //Unit already selected
+                        return false;
+                    }
+                    if (unit.IsEnemy())
+                    {
+                        //Unit is enemy
                         return false;
                     }
                     SetSelectedUnit(unit);

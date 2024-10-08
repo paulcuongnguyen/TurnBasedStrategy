@@ -12,6 +12,7 @@ public class Unit : MonoBehaviour
     public static event EventHandler OnAnyActionPointsChanged;
     [SerializeField] private int actionPoints = ACTION_POINTS_MAX;
     [SerializeField] private const int ACTION_POINTS_MAX = 2;
+    [SerializeField] private bool isEnemy;
     
     private void Awake()
     {
@@ -99,8 +100,16 @@ public class Unit : MonoBehaviour
 
     private void TurnSystem_OnTurnChanged(object sender, EventArgs e)
     {
-        actionPoints = ACTION_POINTS_MAX;   
-        OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+        if ((IsEnemy() && !TurnSystem.Instance.IsPlayerTurn()) ||
+            (!IsEnemy() && TurnSystem.Instance.IsPlayerTurn()))
+        {
+            actionPoints = ACTION_POINTS_MAX;   
+            OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+        }
+   }
 
+    public bool IsEnemy()
+    {
+        return isEnemy;
     }
 }
