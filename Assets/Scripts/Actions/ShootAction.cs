@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ShootAction : BaseAction
 {
+    public event EventHandler OnShoot;
     private enum State
     {
         Aiming,
@@ -32,7 +33,11 @@ public class ShootAction : BaseAction
             case State.Aiming:
                 UnityEngine.Vector3 aimDirection = (targetUnit.GetWorldPosition() - unit.GetWorldPosition()).normalized;
                 float rotateSpeed = 10f;
-                transform.forward = UnityEngine.Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime*rotateSpeed);
+                
+                UnityEngine.Quaternion targetRotation = UnityEngine.Quaternion.LookRotation(aimDirection);
+                transform.rotation = UnityEngine.Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+                // code by CodeMonkey, rotate did not happen fast enough before shooting
+                // transform.forward = UnityEngine.Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime*rotateSpeed);
                 break;
             case State.Shooting:
                 if (canShootBullet)
@@ -53,6 +58,7 @@ public class ShootAction : BaseAction
 
     private void Shoot()
     {
+        OnShoot?.Invoke(this, EventArgs.Empty);
         targetUnit.Damage();
     }
 

@@ -5,9 +5,9 @@ using System;
 
 public class MoveAction : BaseAction
 {
-    private Vector3 targetPosition;
-    
-    [SerializeField] private Animator unitAnimator;
+    public event EventHandler OnStartMoving;
+    public event EventHandler OnStopMoving;
+    private Vector3 targetPosition;   
     [SerializeField] private int maxMoveDistance = 4;
 
 
@@ -29,9 +29,7 @@ public class MoveAction : BaseAction
         if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance)
         {          
             float moveSpeed = 4f;   
-            
-            unitAnimator.SetBool("isWalking", true);
-
+          
             // Moonwalk FIXED, unit NO LONGER move backward for some seconds before turning around 
             float rotateSpeed = 25f;
                         
@@ -45,7 +43,7 @@ public class MoveAction : BaseAction
         }
         else
         {
-            unitAnimator.SetBool("isWalking", false);
+            OnStopMoving?.Invoke(this, EventArgs.Empty);
             ActionComplete();
         }       
 
@@ -55,6 +53,7 @@ public class MoveAction : BaseAction
     {
         ActionStart(onActionComplete);
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+        OnStartMoving?.Invoke(this, EventArgs.Empty);
     }
     
     public override List<GridPosition> GetValidActionGridPositionList()
