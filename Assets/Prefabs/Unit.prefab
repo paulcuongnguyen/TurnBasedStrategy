@@ -55,6 +55,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionPoints: 2
   isEnemy: 0
+  primaryWeapon: {fileID: 5097230645722116364}
 --- !u!65 &4713535342344494387
 BoxCollider:
   m_ObjectHideFlags: 0

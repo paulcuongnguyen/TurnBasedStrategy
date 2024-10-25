@@ -5,6 +5,7 @@ using UnityEngine;
 public class UnitRagdoll : MonoBehaviour
 {
     [SerializeField] private Transform ragdollRootBone;
+    [SerializeField] private Transform primaryWeapon;
 
     public void Setup(Transform originalRootBone)
     {
@@ -25,6 +26,8 @@ public class UnitRagdoll : MonoBehaviour
                 MatchAllChildTransforms(child, cloneChild);
             }
         }
+
+        // primaryWeapon.transform.parent = null;
     }
 
     private void ApplyExplosionToRagdoll(Transform root, float explosionForce, Vector3 explosionPosition, float explosionRange)

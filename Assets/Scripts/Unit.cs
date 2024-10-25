@@ -14,6 +14,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private int actionPoints = ACTION_POINTS_MAX;
     [SerializeField] private const int ACTION_POINTS_MAX = 2;
     [SerializeField] private bool isEnemy;
+    [SerializeField] private Transform primaryWeapon;
     
     private void Awake()
     {
@@ -121,6 +122,8 @@ public class Unit : MonoBehaviour
     private void HealthSystem_OnDead(object sender, EventArgs e)
     {
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
+
+        // primaryWeapon.transform.parent = null;
 
         Destroy(gameObject);
     }
