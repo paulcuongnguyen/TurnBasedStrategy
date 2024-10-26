@@ -123,8 +123,6 @@ public class Unit : MonoBehaviour
     {
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
 
-        // primaryWeapon.transform.parent = null;
-
         Destroy(gameObject);
     }
 

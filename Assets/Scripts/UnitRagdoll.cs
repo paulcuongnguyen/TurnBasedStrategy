@@ -27,7 +27,6 @@ public class UnitRagdoll : MonoBehaviour
             }
         }
 
-        // primaryWeapon.transform.parent = null;
     }
 
     private void ApplyExplosionToRagdoll(Transform root, float explosionForce, Vector3 explosionPosition, float explosionRange)

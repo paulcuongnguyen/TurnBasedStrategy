@@ -19,6 +19,21 @@ PrefabInstance:
       propertyPath: isEnemy
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1562621218449015408, guid: 117d21a09eb73674e8653acfb0866628,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1562621218449015408, guid: 117d21a09eb73674e8653acfb0866628,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.19707021
+      objectReference: {fileID: 0}
+    - target: {fileID: 1562621218449015408, guid: 117d21a09eb73674e8653acfb0866628,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.99215686
+      objectReference: {fileID: 0}
     - target: {fileID: 1925984627188355696, guid: 117d21a09eb73674e8653acfb0866628,
         type: 3}
       propertyPath: m_Name
