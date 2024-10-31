@@ -37,6 +37,7 @@ public class MoveAction : BaseAction
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotateSpeed);
 
             transform.position += moveDirection * moveSpeed *Time.deltaTime;
+            
             // code of CodeMonkey, created moonwalk issue
             // transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime*rotateSpeed);                  
             
@@ -51,9 +52,9 @@ public class MoveAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
-        ActionStart(onActionComplete);
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
         OnStartMoving?.Invoke(this, EventArgs.Empty);
+        ActionStart(onActionComplete);
     }
     
     public override List<GridPosition> GetValidActionGridPositionList()
