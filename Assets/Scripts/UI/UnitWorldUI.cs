@@ -8,25 +8,30 @@ using UnityEngine.UI;
 public class UnitWorldUI : MonoBehaviour
 {
     private Transform cameraTransform;
+    private CameraManager cameraManager;
     [SerializeField] private TextMeshProUGUI actionPointsText;
     [SerializeField] private Unit unit;
     [SerializeField] private Image healthBarImage;
     [SerializeField] private HealthSystem healthSystem;
+    [SerializeField] private GameObject unitCanvas;
 
     private void Awake()
     {
         cameraTransform = Camera.main.transform;
+        cameraManager = FindObjectOfType<CameraManager>();
+        
     }
 
     private void Start()
     {
         Unit.OnAnyActionPointsChanged += Unit_OnAnyActionPointsChanged;
         healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
+        
 
         UpdateActionPointsText();
         UpdateHealthBarImage();
     }
-   
+
     private void LateUpdate()
     {
         transform.rotation = cameraTransform.rotation;
@@ -52,5 +57,6 @@ public class UnitWorldUI : MonoBehaviour
     {
         healthBarImage.fillAmount = healthSystem.GetHealthNormalized();
     }
+   
 
 }

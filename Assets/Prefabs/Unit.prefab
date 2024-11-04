@@ -57,6 +57,8 @@ MonoBehaviour:
   actionPoints: 2
   isEnemy: 0
   primaryWeapon: {fileID: 5097230645722116364}
+  secondaryWeapon: {fileID: 0}
+  cameraManager: {fileID: 0}
 --- !u!65 &4713535342344494387
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -148,6 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthMax: 100
+  health: 0
 --- !u!114 &-7747115717791042584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,6 +617,7 @@ MonoBehaviour:
   unit: {fileID: 1170471956937307438}
   healthBarImage: {fileID: 1562621218449015408}
   healthSystem: {fileID: 2469513927298804088}
+  unitCanvas: {fileID: 7816390982087857324}
 --- !u!1 &8138057906693727225
 GameObject:
   m_ObjectHideFlags: 0

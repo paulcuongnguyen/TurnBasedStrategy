@@ -6,13 +6,21 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     [SerializeField] private GameObject actionCameraGameObject;
+    [SerializeField] private GameObject canvas;
+    [SerializeField] private List<UnitWorldUI> unitWorldUIsList;
+
+    public event EventHandler<OnShowActionCameraEventArgs> OnShowActionCamera;
 
     private void Start()
     {
-        BaseAction.OnAnyActionStarted += BaseAction_OnAnyActionStarted;
-        BaseAction.OnAnyActionCompleted += BaseAction_OnAnyActionCompleted;        
-       
         HideActionCamera();
+        BaseAction.OnAnyActionStarted += BaseAction_OnAnyActionStarted;
+        BaseAction.OnAnyActionCompleted += BaseAction_OnAnyActionCompleted;       
+
+        unitWorldUIsList = new List<UnitWorldUI>(); 
+        UnitWorldUI[] foundUI = FindObjectsOfType<UnitWorldUI>();
+        unitWorldUIsList.AddRange(foundUI);
+        
     }
     
     private void BaseAction_OnAnyActionStarted(object sender, EventArgs e)
@@ -54,11 +62,23 @@ public class CameraManager : MonoBehaviour
     private void ShowActionCamera()
     {
         actionCameraGameObject.SetActive(true);
+        canvas.SetActive(false);
+        foreach (UnitWorldUI unitWorldUI in unitWorldUIsList)
+        {
+            if (unitWorldUI == null) continue;
+            unitWorldUI.gameObject.SetActive(false);
+        }
     }   
 
     private void HideActionCamera()
     {        
         actionCameraGameObject.SetActive(false);
+        canvas.SetActive(true);
+        foreach (UnitWorldUI unitWorldUI in unitWorldUIsList)
+        {
+            if (unitWorldUI == null) continue;
+            unitWorldUI.gameObject.SetActive(true);
+        }
     } 
 
     public void KillCamSequence(Transform unitTranform)
@@ -77,6 +97,12 @@ public class CameraManager : MonoBehaviour
             HideActionCamera();
         }
     }
+   
+    public class OnShowActionCameraEventArgs : EventArgs
+    {
+        public bool show;
+    }
+
 
     
 }
