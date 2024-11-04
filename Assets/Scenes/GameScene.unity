@@ -1714,7 +1714,7 @@ PrefabInstance:
     - target: {fileID: 614566841818677087, guid: 12b60a576e16b9241abde8a53ce0fb5d,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 614566841818677087, guid: 12b60a576e16b9241abde8a53ce0fb5d,
         type: 3}
@@ -1724,7 +1724,7 @@ PrefabInstance:
     - target: {fileID: 614566841818677087, guid: 12b60a576e16b9241abde8a53ce0fb5d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 614566841818677087, guid: 12b60a576e16b9241abde8a53ce0fb5d,
         type: 3}
@@ -1739,12 +1739,17 @@ PrefabInstance:
     - target: {fileID: 614566841818677087, guid: 12b60a576e16b9241abde8a53ce0fb5d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 614566841818677087, guid: 12b60a576e16b9241abde8a53ce0fb5d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4775871366225740581, guid: 12b60a576e16b9241abde8a53ce0fb5d,
+        type: 3}
+      propertyPath: healthMax
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8842902193216616493, guid: 12b60a576e16b9241abde8a53ce0fb5d,
         type: 3}
@@ -2212,14 +2217,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1351440608}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.042956725, y: -0.17348297, z: 0.0075744325, w: 0.98387045}
+  m_LocalRotation: {x: 0.043612763, y: 0.017435841, z: -0.0007612654, w: 0.9988961}
   m_LocalPosition: {x: 2.341043, y: 1.5100932, z: -3.366671}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 728898838}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 5, y: -20, z: 0}
+  m_LocalEulerAnglesHint: {x: 5, y: 2, z: 0}
 --- !u!1 &1394102843
 GameObject:
   m_ObjectHideFlags: 0
@@ -2853,6 +2858,11 @@ PrefabInstance:
       propertyPath: health
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4775871366225740581, guid: 12b60a576e16b9241abde8a53ce0fb5d,
+        type: 3}
+      propertyPath: healthMax
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8842902193216616493, guid: 12b60a576e16b9241abde8a53ce0fb5d,
         type: 3}
       propertyPath: m_Name
@@ -3402,7 +3412,7 @@ PrefabInstance:
     - target: {fileID: 7531519583628023042, guid: 117d21a09eb73674e8653acfb0866628,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 7531519583628023042, guid: 117d21a09eb73674e8653acfb0866628,
         type: 3}

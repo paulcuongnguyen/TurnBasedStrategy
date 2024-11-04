@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -15,13 +16,16 @@ public class Unit : MonoBehaviour
     [SerializeField] private const int ACTION_POINTS_MAX = 2;
     [SerializeField] private bool isEnemy;
     [SerializeField] private Transform primaryWeapon;
-    
+    [SerializeField] private Transform secondaryWeapon;
+    [SerializeField] private CameraManager cameraManager;
+
     private void Awake()
     {
         healthSystem = GetComponent<HealthSystem>();
         moveAction = GetComponent<MoveAction>();   
         spinAction = GetComponent<SpinAction>();
         baseActionArray = GetComponents<BaseAction>();
+        cameraManager = FindObjectOfType<CameraManager>();
     }
 
 
@@ -121,10 +125,11 @@ public class Unit : MonoBehaviour
 
     private void HealthSystem_OnDead(object sender, EventArgs e)
     {
+        cameraManager.KillCamSequence(this.transform);
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
 
         Destroy(gameObject);
-    }
+    }   
 
     public bool IsEnemy()
     {
@@ -134,5 +139,10 @@ public class Unit : MonoBehaviour
     internal void Damage(int damageAmount)
     {
         healthSystem.Damage(damageAmount);
+    }
+
+    public HealthSystem GetHealthSystem()
+    {
+        return healthSystem;
     }
 }

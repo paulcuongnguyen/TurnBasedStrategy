@@ -8,8 +8,7 @@ public class HealthSystem : MonoBehaviour
     public event EventHandler OnDead;
     public event EventHandler OnHealthChanged;
     [SerializeField] private int healthMax = 100;
-
-    private int health;
+    [SerializeField] private int health;
 
     private void Awake()
     {
