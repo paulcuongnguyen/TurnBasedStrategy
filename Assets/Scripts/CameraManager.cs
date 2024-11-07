@@ -7,9 +7,8 @@ public class CameraManager : MonoBehaviour
 {
     [SerializeField] private GameObject actionCameraGameObject;
     [SerializeField] private GameObject canvas;
-    [SerializeField] private List<UnitWorldUI> unitWorldUIsList;
-
-    public event EventHandler<OnShowActionCameraEventArgs> OnShowActionCamera;
+    [SerializeField] private List<UnitWorldUI> unitWorldUIsList;  
+    [SerializeField] private List<UnitSelectedVisual> unitSelectedVisualList;
 
     private void Start()
     {
@@ -20,7 +19,10 @@ public class CameraManager : MonoBehaviour
         unitWorldUIsList = new List<UnitWorldUI>(); 
         UnitWorldUI[] foundUI = FindObjectsOfType<UnitWorldUI>();
         unitWorldUIsList.AddRange(foundUI);
-        
+
+        unitSelectedVisualList = new List<UnitSelectedVisual>();
+        UnitSelectedVisual[] foundVisual = FindObjectsOfType<UnitSelectedVisual>();
+        unitSelectedVisualList.AddRange(foundVisual);
     }
     
     private void BaseAction_OnAnyActionStarted(object sender, EventArgs e)
@@ -58,7 +60,7 @@ public class CameraManager : MonoBehaviour
             //     break;
         }
     }
-
+         
     private void ShowActionCamera()
     {
         actionCameraGameObject.SetActive(true);
@@ -68,6 +70,11 @@ public class CameraManager : MonoBehaviour
             if (unitWorldUI == null) continue;
             unitWorldUI.gameObject.SetActive(false);
         }
+        foreach (UnitSelectedVisual unitSelectedVisual in unitSelectedVisualList)
+        {
+            if (unitSelectedVisual == null) continue;
+            unitSelectedVisual.gameObject.SetActive(false);
+        }      
     }   
 
     private void HideActionCamera()
@@ -79,6 +86,11 @@ public class CameraManager : MonoBehaviour
             if (unitWorldUI == null) continue;
             unitWorldUI.gameObject.SetActive(true);
         }
+        foreach (UnitSelectedVisual unitSelectedVisual in unitSelectedVisualList)
+        {
+            if (unitSelectedVisual == null) continue;
+            unitSelectedVisual.gameObject.SetActive(true);
+        }              
     } 
 
     public void KillCamSequence(Transform unitTranform)
@@ -96,13 +108,5 @@ public class CameraManager : MonoBehaviour
             yield return new WaitForSeconds(2); 
             HideActionCamera();
         }
-    }
-   
-    public class OnShowActionCameraEventArgs : EventArgs
-    {
-        public bool show;
-    }
-
-
-    
+    }   
 }
