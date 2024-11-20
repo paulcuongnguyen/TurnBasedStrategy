@@ -29,7 +29,7 @@ public class CameraManager : MonoBehaviour
     {
         switch(sender)
         {
-            // case ShootAction shootAction:
+            case ShootAction shootAction:
             //     Unit shooterUnit = shootAction.GetUnit();
             //     Unit targetUnit = shootAction.GetTargetUnit();
 
@@ -48,16 +48,16 @@ public class CameraManager : MonoBehaviour
             //     actionCameraGameObject.transform.LookAt(targetUnit.GetWorldPosition() + cameraCharacterHeight);
 
             //     ShowActionCamera();
-            //     break;
+                break;
         }
     }
     private void BaseAction_OnAnyActionCompleted(object sender, EventArgs e)
     {
         switch(sender)
         {
-            // case ShootAction shootAction:
+            case ShootAction shootAction:
             //     HideActionCamera();
-            //     break;
+                break;
         }
     }
          

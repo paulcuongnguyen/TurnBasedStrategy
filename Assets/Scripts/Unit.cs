@@ -11,7 +11,12 @@ public class Unit : MonoBehaviour
     private SpinAction spinAction;
     private BaseAction[] baseActionArray;
     private HealthSystem healthSystem;
+
     public static event EventHandler OnAnyActionPointsChanged;
+    public static event EventHandler OnAnyUnitSpawned;
+    public static event EventHandler OnAnyUnitDead;
+
+    
     [SerializeField] private int actionPoints = ACTION_POINTS_MAX;
     [SerializeField] private const int ACTION_POINTS_MAX = 2;
     [SerializeField] private bool isEnemy;
@@ -36,6 +41,8 @@ public class Unit : MonoBehaviour
         
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
         healthSystem.OnDead += HealthSystem_OnDead;
+
+        OnAnyUnitSpawned?.Invoke(this, EventArgs.Empty);
     }
 
     
@@ -128,6 +135,8 @@ public class Unit : MonoBehaviour
     {
         cameraManager.KillCamSequence(this.transform);
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
+
+        OnAnyUnitDead?.Invoke(this, EventArgs.Empty);
 
         Destroy(gameObject);
     }   
