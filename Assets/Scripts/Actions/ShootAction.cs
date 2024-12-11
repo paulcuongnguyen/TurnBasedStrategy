@@ -29,7 +29,8 @@ public class ShootAction : BaseAction
     [SerializeField] float shootingStateTime = 0.1f;
     [SerializeField] float coolOffStateTime = 0.5f;
     [SerializeField] private int maxShootDistance = 4;
-
+    [SerializeField] private LayerMask obstacleLayerMask;   
+ 
     private void Update()
     {
         if (!isActive) return;
@@ -103,8 +104,7 @@ public class ShootAction : BaseAction
 
     public List<GridPosition> GetValidActionGridPositionList(GridPosition unitGridPosition)
     {
-        List<GridPosition> validGridPositionsList = new List<GridPosition>();
-        
+        List<GridPosition> validGridPositionsList = new List<GridPosition>();        
 
         for (int x = -maxShootDistance; x <= maxShootDistance; x++)
         {
@@ -147,6 +147,20 @@ public class ShootAction : BaseAction
                     //both units on the same team
                     continue;
                 }
+
+                UnityEngine.Vector3 unitWorldPosition = LevelGrid.Instance.GetWorldPosition(unitGridPosition);
+                UnityEngine.Vector3 shootDir = (targetUnit.GetWorldPosition() - unitWorldPosition).normalized;
+                float unitShoulderHeight = 1.7f;
+
+                if (Physics.Raycast(unitWorldPosition + UnityEngine.Vector3.up * unitShoulderHeight,
+                                shootDir,
+                                UnityEngine.Vector3.Distance(unitWorldPosition, targetUnit.GetWorldPosition()),
+                                obstacleLayerMask))
+                {
+                    // blocked by obstacles
+                    continue;
+                }
+
                 validGridPositionsList.Add(testGridPosition);
             }
         }

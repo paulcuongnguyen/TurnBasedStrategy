@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 167d45fa94d182c4e9f145f75ee511c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionPoints: 2
+  actionPoints: 4
   isEnemy: 0
   primaryWeapon: {fileID: 5097230645722116364}
   secondaryWeapon: {fileID: 0}
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e57e6e6069d7204287ee6895f61916f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMoveDistance: 2
+  maxMoveDistance: 4
 --- !u!114 &3600055981293259596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +120,10 @@ MonoBehaviour:
   aimingStateTime: 1
   shootingStateTime: 0.1
   coolOffStateTime: 0.5
-  maxShootDistance: 4
+  maxShootDistance: 6
+  obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &3979190818924226554
 MonoBehaviour:
   m_ObjectHideFlags: 0

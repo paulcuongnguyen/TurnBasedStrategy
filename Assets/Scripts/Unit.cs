@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
 
     
     [SerializeField] private int actionPoints = ACTION_POINTS_MAX;
-    [SerializeField] private const int ACTION_POINTS_MAX = 2;
+    [SerializeField] private const int ACTION_POINTS_MAX = 4;
     [SerializeField] private bool isEnemy;
     [SerializeField] private Transform primaryWeapon;
     [SerializeField] private Transform secondaryWeapon;
