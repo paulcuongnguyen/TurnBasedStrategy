@@ -120,13 +120,102 @@ public class MoveAction : BaseAction
         return "Move";
     }
 
+    // Original EnemyAIAction by CodeMonkey with null modified to use with below override GetBestEnemyAIAction
+    // public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
+    // {
+    //     int targetCountAtGridPosition = unit.GetAction<ShootAction>().GetTargetCountAtPosition(gridPosition);
+    //     if (targetCountAtGridPosition == 0)
+    //     {
+    //         return null;
+    //     }
+    //     else
+    //     {
+    //         return new EnemyAIAction
+    //     {
+    //         gridPosition = gridPosition,
+    //         actionValue = targetCountAtGridPosition * 10,
+    //     };
+    //     }
+    // }    
+
+    // // better EnemyAI implement, if no targetable playr in range, enemy will seek nearest player to target 
+    // public override EnemyAIAction GetBestEnemyAIAction()
+    // {
+    //     List<EnemyAIAction> enemyAIActionList = new List<EnemyAIAction>();
+    //     List<GridPosition> validActionGridPositionList = GetValidActionGridPositionList();
+
+    //     foreach (GridPosition gridPosition in validActionGridPositionList)
+    //     {
+    //         EnemyAIAction action = GetEnemyAIAction(gridPosition);
+    //         if (action != null)
+    //             enemyAIActionList.Add(action);
+    //     }
+
+    //     // if no targetable enemies within path than lets pathfind to closest enemy
+    //     if (enemyAIActionList.Count == 0)
+    //     {
+    //         // find shortest path
+    //         var enemies = UnitManager.Instance.GetFriendlyUnitList();
+    //         var unitPosition = unit.GetGridPosition();
+    //         List<GridPosition> shortestPath = new List<GridPosition>();
+    //         foreach (var enemy in enemies)
+    //         {
+    //             var path = Pathfinding.Instance.FindPath(unitPosition, enemy.GetGridPosition(), out int length);
+    //             if (shortestPath.Count == 0 || length <= shortestPath.Count)
+    //             {
+    //                 shortestPath = path;
+    //             }
+    //         }
+    //         //reverse list from furthest to closes so we can find furthest item first and return it
+    //         shortestPath.Reverse();
+    //         foreach(var pathItem in shortestPath)
+    //         {
+    //             if (validActionGridPositionList.Contains(pathItem))
+    //             {
+    //                 var gridPosition = new GridPosition(pathItem.x, pathItem.z);
+    //                 return new EnemyAIAction
+    //                 {
+    //                     gridPosition = gridPosition,
+    //                     actionValue = 50
+    //                 };
+    //             }
+    //         }
+    //     }
+
+    //     if (enemyAIActionList.Count > 0)
+    //     {
+    //         enemyAIActionList.Sort((EnemyAIAction a, EnemyAIAction b) => b.actionValue - a.actionValue);
+    //         return enemyAIActionList[0];
+    //     }
+    //     else
+    //     {
+    //         return null;
+    //     }
+    // }
+
+    // new EnemyAIAction will patrol randomly if no target sighted
+    // will chase target once sighted, back to patrol if loosing sight
+    // TODO: Enemy to run to last known player location before back to patrol
+
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
-        int targetCountAtGridPostion = unit.GetAction<ShootAction>().GetTargetCountAtPosition(gridPosition);
-        return new EnemyAIAction
+        int targetCountAtGridPosition = unit.GetAction<ShootAction>().GetTargetCountAtPosition(gridPosition);
+
+        if (targetCountAtGridPosition == 0)
         {
-            gridPosition = gridPosition,
-            actionValue = targetCountAtGridPostion * 10,
-        };
+            return new EnemyAIAction
+            {
+                gridPosition = gridPosition,
+                actionValue = UnityEngine.Random.Range(1, 51)
+            };
+        }
+        else
+        {
+            return new EnemyAIAction
+            {
+                gridPosition = gridPosition,
+                actionValue = 50 + targetCountAtGridPosition * 10
+            };
+        }    
     }
 }
