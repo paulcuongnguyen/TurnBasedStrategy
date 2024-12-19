@@ -120,7 +120,7 @@ public class MoveAction : BaseAction
         return "Move";
     }
 
-    // Original EnemyAIAction by CodeMonkey with null modified to use with below override GetBestEnemyAIAction
+    // // Original EnemyAIAction by CodeMonkey with null modified to use with below override GetBestEnemyAIAction
     // public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     // {
     //     int targetCountAtGridPosition = unit.GetAction<ShootAction>().GetTargetCountAtPosition(gridPosition);
@@ -128,17 +128,19 @@ public class MoveAction : BaseAction
     //     {
     //         return null;
     //     }
-    //     else
+    //     else 
     //     {
     //         return new EnemyAIAction
     //     {
     //         gridPosition = gridPosition,
     //         actionValue = targetCountAtGridPosition * 10,
     //     };
-    //     }
+    //     }   
+                
     // }    
 
     // // better EnemyAI implement, if no targetable playr in range, enemy will seek nearest player to target 
+    
     // public override EnemyAIAction GetBestEnemyAIAction()
     // {
     //     List<EnemyAIAction> enemyAIActionList = new List<EnemyAIAction>();
@@ -196,7 +198,6 @@ public class MoveAction : BaseAction
     // new EnemyAIAction will patrol randomly if no target sighted
     // will chase target once sighted, back to patrol if loosing sight
     // TODO: Enemy to run to last known player location before back to patrol
-
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
         int targetCountAtGridPosition = unit.GetAction<ShootAction>().GetTargetCountAtPosition(gridPosition);

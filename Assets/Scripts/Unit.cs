@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private bool isEnemy;
     [SerializeField] private Transform primaryWeapon;
     [SerializeField] private Transform secondaryWeapon;
+    [SerializeField] public Transform lookAt;
     [SerializeField] private CameraManager cameraManager;
 
     private void Awake()
@@ -132,7 +134,7 @@ public class Unit : MonoBehaviour
 
     private void HealthSystem_OnDead(object sender, EventArgs e)
     {
-        cameraManager.KillCamSequence(this.transform);
+        cameraManager.KillCamSequence(this);
         LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
 
         OnAnyUnitDead?.Invoke(this, EventArgs.Empty);
@@ -158,5 +160,10 @@ public class Unit : MonoBehaviour
     public float GetHealthNormalized()
     {
         return healthSystem.GetHealthNormalized();
+    }
+
+    public Transform GetLookAt()
+    {
+        return lookAt;
     }
 }

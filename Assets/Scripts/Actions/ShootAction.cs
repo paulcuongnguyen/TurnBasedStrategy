@@ -7,6 +7,7 @@ using UnityEngine;
 public class ShootAction : BaseAction
 {
     public event EventHandler<OnShootEventArgs> OnShoot;
+    public static event EventHandler<OnShootEventArgs> OnAnyShoot;
 
     public class OnShootEventArgs: EventArgs
     {
@@ -70,6 +71,12 @@ public class ShootAction : BaseAction
                                 targetUnit = targetUnit,
                                 shootingUnit = unit
                                 });
+                                
+        OnAnyShoot?.Invoke(this, new OnShootEventArgs {
+                                targetUnit = targetUnit,
+                                shootingUnit = unit
+                                });
+
         targetUnit.Damage(40);
     }
 

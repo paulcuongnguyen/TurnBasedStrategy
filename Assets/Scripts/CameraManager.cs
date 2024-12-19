@@ -2,10 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+
 
 public class CameraManager : MonoBehaviour
 {
     [SerializeField] private GameObject actionCameraGameObject;
+    [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private GameObject canvas;
     [SerializeField] private List<UnitWorldUI> unitWorldUIsList;  
     [SerializeField] private List<UnitSelectedVisual> unitSelectedVisualList;
@@ -93,13 +96,15 @@ public class CameraManager : MonoBehaviour
         }              
     } 
 
-    public void KillCamSequence(Transform unitTranform)
+    public void KillCamSequence(Unit unit)
     {
-        Vector3 killCamShoulderOffset =  Quaternion.Euler(0, 120, 0) * unitTranform.forward * 4f;
+        Vector3 killCamShoulderOffset =  Quaternion.Euler(0, 120, 0) * unit.transform.forward * 4f;
         Vector3 killCamHeight = Vector3.up * 1.6f;
         
-        actionCameraGameObject.transform.position = unitTranform.position + killCamShoulderOffset + killCamHeight;
-        actionCameraGameObject.transform.LookAt(unitTranform.position + killCamHeight);
+        actionCameraGameObject.transform.position = unit.transform.position + killCamShoulderOffset + killCamHeight;
+        actionCameraGameObject.transform.LookAt(unit.transform.position + killCamHeight);
+                
+        // virtualCamera.LookAt = unit.lookAt;
 
         StartCoroutine(Wait());
         IEnumerator Wait()

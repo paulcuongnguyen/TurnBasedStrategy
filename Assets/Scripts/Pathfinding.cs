@@ -28,7 +28,6 @@ public class Pathfinding : MonoBehaviour
 
     private void Start()
     {
-        Testing.TestingActionOn += TestingActionOn;
     }
 
     private void TestingActionOn(object sender, EventArgs e)

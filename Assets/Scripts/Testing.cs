@@ -6,7 +6,6 @@ using System;
 public class Testing : MonoBehaviour
 {
     [SerializeField] private Unit unit;
-    public static event EventHandler TestingActionOn;
 
 
     void Start()
@@ -18,7 +17,6 @@ public class Testing : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            TestingActionOn?.Invoke(this, EventArgs.Empty);
         }
         
     }
