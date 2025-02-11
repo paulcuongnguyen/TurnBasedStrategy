@@ -59,14 +59,23 @@ public class GrenadeAction : BaseAction
                     //same grid position where unit already at
                     continue;
                 }
+                if (!Pathfinding.Instance.IsWalkableGridPosition(testGridPosition))
+                {
+                    //grid position is not walkable
+                    continue;
+                }
+                if (!Pathfinding.Instance.HasPath(unitGridPosition, testGridPosition))
+                {
+                    //grid position is not reachable
+                    continue;
+                }
+                
                 // this below is excluded to allow unit to shoot anywhere, not just the grid occupied by enemy
                 // if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
                 // {
                 //     //gridposition is empty
                 //     continue;
-                // }
-
-                
+                // }                
 
                 validGridPositionsList.Add(testGridPosition);
             }
