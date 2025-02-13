@@ -20,7 +20,7 @@ public class UnitRagdoll : MonoBehaviour
         foreach (Transform child in root)
         {
             Transform cloneChild = clone.Find(child.name);
-            if (clone != null)
+            if (cloneChild != null)
             {
                 cloneChild.position = child.position;
                 cloneChild.rotation = child.rotation;

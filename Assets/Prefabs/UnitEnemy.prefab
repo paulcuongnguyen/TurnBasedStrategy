@@ -39,6 +39,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnitEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3979190818924226554, guid: 117d21a09eb73674e8653acfb0866628,
+        type: 3}
+      propertyPath: swordTransform
+      value: 
+      objectReference: {fileID: 7240651428476419494}
     - target: {fileID: 5050001604446046246, guid: 117d21a09eb73674e8653acfb0866628,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -95,7 +100,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7891028136748688434, guid: 117d21a09eb73674e8653acfb0866628, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 117d21a09eb73674e8653acfb0866628, type: 3}
+--- !u!4 &7240651428476419494 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 322502692886599675, guid: 117d21a09eb73674e8653acfb0866628,
+    type: 3}
+  m_PrefabInstance: {fileID: 6918149568817146461}
+  m_PrefabAsset: {fileID: 0}

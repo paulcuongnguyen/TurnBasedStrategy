@@ -137,18 +137,20 @@ public class ShootAction : BaseAction
                     //same grid position where unit already at
                     continue;
                 }
+                
                 // this below is excluded to allow unit to shoot anywhere, not just the grid occupied by enemy
-                // if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
-                // {
-                //     //gridposition is empty
-                //     continue;
-                // }
+                if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
+                {
+                    //gridposition is empty
+                    continue;
+                }
 
-                Unit targetUnit = LevelGrid.Instance.GetUnitOnGridPosition(testGridPosition);
+                Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(testGridPosition);
                 if (targetUnit == null) 
                 {
                     continue;
                 }
+                
                 if (targetUnit.IsEnemy() == unit.IsEnemy())
                 {
                     //both units on the same team
@@ -177,7 +179,7 @@ public class ShootAction : BaseAction
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {      
-        targetUnit = LevelGrid.Instance.GetUnitOnGridPosition(gridPosition);
+        targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
         state = State.Aiming;
         stateTimer = aimingStateTime;
@@ -199,7 +201,7 @@ public class ShootAction : BaseAction
 
     public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition)
     {
-        Unit targetUnit = LevelGrid.Instance.GetUnitOnGridPosition(gridPosition);
+        Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
 
         return new EnemyAIAction
         {
