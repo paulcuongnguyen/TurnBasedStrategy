@@ -277,7 +277,7 @@ MonoBehaviour:
   moveSpeed: 15
   damageRadius: 4
   grenadeDamage: 30
-  grenadeExplodeVFXPrefab: {fileID: 4770418728398925890, guid: a276caf1d14dd024e9ae9d70d061678d,
+  grenadeExplodeVFXPrefab: {fileID: 1100350516903454809, guid: b06ccbeb96ec22b408c675050a2517c3,
     type: 3}
   trailRenderer: {fileID: 220035012022248094}
   arcYAnimationCurve:
