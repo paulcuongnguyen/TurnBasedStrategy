@@ -5077,6 +5077,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5266634917665503703, guid: c82b10c95c5484801b7618f55fbff557,
         type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5266634917665503703, guid: c82b10c95c5484801b7618f55fbff557,
+        type: 3}
       propertyPath: InitialModule.startSpeed.minScalar
       value: 5
       objectReference: {fileID: 0}
@@ -5099,6 +5104,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ParticleSystem_Splash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8982528275862794529, guid: c82b10c95c5484801b7618f55fbff557,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5123,6 +5133,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3626793669200394906, guid: a1f6b97156cc34a83a9c2593d5a196e7,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 3626793669200394906, guid: a1f6b97156cc34a83a9c2593d5a196e7,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 3626793669200394906, guid: a1f6b97156cc34a83a9c2593d5a196e7,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.47
       objectReference: {fileID: 0}
     - target: {fileID: 3626793669200394906, guid: a1f6b97156cc34a83a9c2593d5a196e7,
         type: 3}
@@ -5173,6 +5198,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3626793669200394906, guid: a1f6b97156cc34a83a9c2593d5a196e7,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5457304116505308116, guid: a1f6b97156cc34a83a9c2593d5a196e7,
         type: 3}
@@ -5296,6 +5326,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ParticleSystem_Sparks
+      objectReference: {fileID: 0}
+    - target: {fileID: 2533041155713510639, guid: 381e02f47a2a047219b58d999746659b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2622929213867377808, guid: 381e02f47a2a047219b58d999746659b,
         type: 3}
