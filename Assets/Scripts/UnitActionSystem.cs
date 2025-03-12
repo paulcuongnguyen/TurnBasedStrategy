@@ -44,7 +44,9 @@ public class UnitActionSystem : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject()) return;
         
         // check if that mouseclick is to select a unit, if it is true, then do not move unit, only move after unit already be selected
-        if (TryHandleUnitSelection()) return;          
+        if (TryHandleUnitSelection()) return;    
+
+        AutoSelectUnit();      
                                
         HandleSelectedAction();        
     }
@@ -117,6 +119,15 @@ public class UnitActionSystem : MonoBehaviour
         SetSelectedAction(unit.GetAction<MoveAction>());
 
         OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);       
+    }
+
+    // if no unit selected or when selected unit died, then select the first unit in the list
+    private void AutoSelectUnit()
+    {
+        if (selectedUnit == null)
+        {
+            SetSelectedUnit(UnitManager.Instance.GetFriendlyUnitList()[0]);
+        }
     }
 
     public Unit GetSelectedUnit()

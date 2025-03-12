@@ -7,6 +7,7 @@ public class GrenadeAction : BaseAction
 {
     [SerializeField] private Transform grenadeProjectilePrefab;
     [SerializeField] private int maxThrowDistance = 4;
+    [SerializeField] private LayerMask obstaclesLayerMask;
     private void Update() 
     {
         if (!isActive)
@@ -67,6 +68,15 @@ public class GrenadeAction : BaseAction
                 if (!Pathfinding.Instance.HasPath(unitGridPosition, testGridPosition))
                 {
                     //grid position is not reachable
+                    continue;
+                }
+
+                Vector3 shootDir = (LevelGrid.Instance.GetWorldPosition(testGridPosition) - transform.position);
+                float unitShoulderHeight = 1.7f;
+                if (Physics.Raycast(transform.position + Vector3.up * unitShoulderHeight, shootDir.normalized,
+                    shootDir.magnitude, obstaclesLayerMask))
+                {
+                    //blocked by an obstacle
                     continue;
                 }
                 

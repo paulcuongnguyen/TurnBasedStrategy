@@ -8,7 +8,6 @@ public class ScreenShakeAction : MonoBehaviour
 {
     private void Start()
     {
-        Unit.OnAnyUnitDead += Unit_OnAnyUnitDead;
         GrenadeProjectile.OnAnyGrenadeExloped += GrenadeProjectile_OnAnyGrenadeExloped;
     }
 
@@ -16,9 +15,4 @@ public class ScreenShakeAction : MonoBehaviour
     {
         ScreenShake.Instance.Shake(2f);
     }
-
-    private void Unit_OnAnyUnitDead(object sender, EventArgs e)
-    {
-        ScreenShake.Instance.Shake();
-    }   
 }

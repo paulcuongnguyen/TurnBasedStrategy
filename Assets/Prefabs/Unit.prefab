@@ -144,6 +144,9 @@ MonoBehaviour:
   grenadeProjectilePrefab: {fileID: 7408879358423732847, guid: f28a290a33c517d458074eec06863496,
     type: 3}
   maxThrowDistance: 4
+  obstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &3979190818924226554
 MonoBehaviour:
   m_ObjectHideFlags: 0
