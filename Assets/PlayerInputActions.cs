@@ -71,6 +71,51 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectNextUnit"",
+                    ""type"": ""Button"",
+                    ""id"": ""f6aad165-2a6e-4ff7-bf39-eba59b5c1912"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectPreviousUnit"",
+                    ""type"": ""Button"",
+                    ""id"": ""d8ab9e66-d043-4111-adbd-8a828b59f0cb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectNextAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""10f9e44e-39f3-4b8c-81fd-42791d676e8b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectPreviousAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""62c99fca-7acd-4dfb-abe2-8d59d87dd146"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EndTurn"",
+                    ""type"": ""Button"",
+                    ""id"": ""5653a295-bb26-4b9b-b512-06b6c4dd3776"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -326,6 +371,116 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""MouseClick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2fd1f79d-7be5-4ef1-920b-16ac7ce49edd"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectNextUnit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7bec56d0-12b6-4cd5-b86b-8ed22b3da2c0"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectNextUnit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd286d8f-c369-4e72-b7d0-ba9d75ae259d"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectPreviousUnit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9dbe273e-28e7-4c81-be93-696a8df85af5"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectPreviousUnit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fe9a6f1c-74e5-40cc-8e7f-41f59dbd5ece"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectNextAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8619ddaf-29e5-4ebd-9ff8-f71a279e4eb1"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectNextAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""26bd79ad-acf8-49fc-baee-b508cbf34720"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectPreviousAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fa97605a-095e-4ec5-bcc7-59a8895c01f8"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectPreviousAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7eef7cc-103a-4c3e-9932-cd5164ce975a"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EndTurn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e1889c5-3d8d-4892-949b-b613b1636ba7"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EndTurn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -339,6 +494,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_CameraHeight = m_Player.FindAction("CameraHeight", throwIfNotFound: true);
         m_Player_CameraReset = m_Player.FindAction("CameraReset", throwIfNotFound: true);
         m_Player_MouseClick = m_Player.FindAction("MouseClick", throwIfNotFound: true);
+        m_Player_SelectNextUnit = m_Player.FindAction("SelectNextUnit", throwIfNotFound: true);
+        m_Player_SelectPreviousUnit = m_Player.FindAction("SelectPreviousUnit", throwIfNotFound: true);
+        m_Player_SelectNextAction = m_Player.FindAction("SelectNextAction", throwIfNotFound: true);
+        m_Player_SelectPreviousAction = m_Player.FindAction("SelectPreviousAction", throwIfNotFound: true);
+        m_Player_EndTurn = m_Player.FindAction("EndTurn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -405,6 +565,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_CameraHeight;
     private readonly InputAction m_Player_CameraReset;
     private readonly InputAction m_Player_MouseClick;
+    private readonly InputAction m_Player_SelectNextUnit;
+    private readonly InputAction m_Player_SelectPreviousUnit;
+    private readonly InputAction m_Player_SelectNextAction;
+    private readonly InputAction m_Player_SelectPreviousAction;
+    private readonly InputAction m_Player_EndTurn;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -414,6 +579,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @CameraHeight => m_Wrapper.m_Player_CameraHeight;
         public InputAction @CameraReset => m_Wrapper.m_Player_CameraReset;
         public InputAction @MouseClick => m_Wrapper.m_Player_MouseClick;
+        public InputAction @SelectNextUnit => m_Wrapper.m_Player_SelectNextUnit;
+        public InputAction @SelectPreviousUnit => m_Wrapper.m_Player_SelectPreviousUnit;
+        public InputAction @SelectNextAction => m_Wrapper.m_Player_SelectNextAction;
+        public InputAction @SelectPreviousAction => m_Wrapper.m_Player_SelectPreviousAction;
+        public InputAction @EndTurn => m_Wrapper.m_Player_EndTurn;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -438,6 +608,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MouseClick.started += instance.OnMouseClick;
             @MouseClick.performed += instance.OnMouseClick;
             @MouseClick.canceled += instance.OnMouseClick;
+            @SelectNextUnit.started += instance.OnSelectNextUnit;
+            @SelectNextUnit.performed += instance.OnSelectNextUnit;
+            @SelectNextUnit.canceled += instance.OnSelectNextUnit;
+            @SelectPreviousUnit.started += instance.OnSelectPreviousUnit;
+            @SelectPreviousUnit.performed += instance.OnSelectPreviousUnit;
+            @SelectPreviousUnit.canceled += instance.OnSelectPreviousUnit;
+            @SelectNextAction.started += instance.OnSelectNextAction;
+            @SelectNextAction.performed += instance.OnSelectNextAction;
+            @SelectNextAction.canceled += instance.OnSelectNextAction;
+            @SelectPreviousAction.started += instance.OnSelectPreviousAction;
+            @SelectPreviousAction.performed += instance.OnSelectPreviousAction;
+            @SelectPreviousAction.canceled += instance.OnSelectPreviousAction;
+            @EndTurn.started += instance.OnEndTurn;
+            @EndTurn.performed += instance.OnEndTurn;
+            @EndTurn.canceled += instance.OnEndTurn;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -457,6 +642,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MouseClick.started -= instance.OnMouseClick;
             @MouseClick.performed -= instance.OnMouseClick;
             @MouseClick.canceled -= instance.OnMouseClick;
+            @SelectNextUnit.started -= instance.OnSelectNextUnit;
+            @SelectNextUnit.performed -= instance.OnSelectNextUnit;
+            @SelectNextUnit.canceled -= instance.OnSelectNextUnit;
+            @SelectPreviousUnit.started -= instance.OnSelectPreviousUnit;
+            @SelectPreviousUnit.performed -= instance.OnSelectPreviousUnit;
+            @SelectPreviousUnit.canceled -= instance.OnSelectPreviousUnit;
+            @SelectNextAction.started -= instance.OnSelectNextAction;
+            @SelectNextAction.performed -= instance.OnSelectNextAction;
+            @SelectNextAction.canceled -= instance.OnSelectNextAction;
+            @SelectPreviousAction.started -= instance.OnSelectPreviousAction;
+            @SelectPreviousAction.performed -= instance.OnSelectPreviousAction;
+            @SelectPreviousAction.canceled -= instance.OnSelectPreviousAction;
+            @EndTurn.started -= instance.OnEndTurn;
+            @EndTurn.performed -= instance.OnEndTurn;
+            @EndTurn.canceled -= instance.OnEndTurn;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -481,5 +681,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnCameraHeight(InputAction.CallbackContext context);
         void OnCameraReset(InputAction.CallbackContext context);
         void OnMouseClick(InputAction.CallbackContext context);
+        void OnSelectNextUnit(InputAction.CallbackContext context);
+        void OnSelectPreviousUnit(InputAction.CallbackContext context);
+        void OnSelectNextAction(InputAction.CallbackContext context);
+        void OnSelectPreviousAction(InputAction.CallbackContext context);
+        void OnEndTurn(InputAction.CallbackContext context);
     }
 }

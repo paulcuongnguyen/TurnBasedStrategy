@@ -49,6 +49,10 @@ public class UnitActionSystem : MonoBehaviour
         AutoSelectUnit();      
                                
         HandleSelectedAction();        
+
+        SwitchUnit();
+
+        SwitchAction();
     }
 
     private void HandleSelectedAction()
@@ -112,7 +116,7 @@ public class UnitActionSystem : MonoBehaviour
         }
         return false;
     }
-
+  
     private void SetSelectedUnit(Unit unit)
     {
         selectedUnit = unit;
@@ -130,11 +134,47 @@ public class UnitActionSystem : MonoBehaviour
         }
     }
 
+    private void SwitchUnit()
+    {
+        if (InputManager.Instance.SelectNextUnit())
+        {
+            List<Unit> friendlyUnitList = UnitManager.Instance.GetFriendlyUnitList();
+            int currentIndex = friendlyUnitList.IndexOf(selectedUnit);
+            int nextIndex = (currentIndex + 1) % friendlyUnitList.Count;
+            SetSelectedUnit(friendlyUnitList[nextIndex]);
+        }
+        if (InputManager.Instance.SelectPreviousUnit())
+        {
+            List<Unit> friendlyUnitList = UnitManager.Instance.GetFriendlyUnitList();
+            int currentIndex = friendlyUnitList.IndexOf(selectedUnit);
+            int previousIndex = (currentIndex - 1 + friendlyUnitList.Count) % friendlyUnitList.Count;
+            SetSelectedUnit(friendlyUnitList[previousIndex]);
+        }
+    }
+
+    private void SwitchAction()
+    {
+        if (InputManager.Instance.SelectNextAction())
+        {
+            List<BaseAction> baseActionList = new List<BaseAction>(selectedUnit.GetBaseActionArray());
+            int currentIndex = baseActionList.IndexOf(selectedAction);
+            int nextIndex = (currentIndex + 1) % baseActionList.Count;
+            SetSelectedAction(baseActionList[nextIndex]);
+        }        
+        if (InputManager.Instance.SelectPreviousAction())
+        {
+            List<BaseAction> baseActionList = new List<BaseAction>(selectedUnit.GetBaseActionArray());
+            int currentIndex = baseActionList.IndexOf(selectedAction);
+            int previousIndex = (currentIndex - 1 + baseActionList.Count) % baseActionList.Count;
+            SetSelectedAction(baseActionList[previousIndex]);
+        }
+    }
+
     public Unit GetSelectedUnit()
     {
         return selectedUnit;
     }
-
+    
     public void SetSelectedAction(BaseAction baseAction)
     {
         selectedAction = baseAction;

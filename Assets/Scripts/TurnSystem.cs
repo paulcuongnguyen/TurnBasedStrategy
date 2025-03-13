@@ -22,6 +22,11 @@ public class TurnSystem : MonoBehaviour
         Instance = this;
     }
 
+    private void Update()
+    {
+        EndTurnButton();
+    }
+
     public void NextTurn()
     {
         turnNumber++;
@@ -37,5 +42,13 @@ public class TurnSystem : MonoBehaviour
     public bool IsPlayerTurn()
     {
         return isPlayerTurn;
+    }
+
+    private void EndTurnButton()
+    {
+        if (InputManager.Instance.EndTurn())
+        {
+            NextTurn();
+        }
     }
 }

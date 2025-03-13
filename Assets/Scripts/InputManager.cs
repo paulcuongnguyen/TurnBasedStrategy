@@ -117,4 +117,49 @@ public class InputManager : MonoBehaviour
         return Input.GetMouseButtonDown(2);
         #endif
     }    
+
+    public bool SelectNextUnit()
+    {
+        #if USE_NEW_INPUT_SYSTEM
+        return playerInputActions.Player.SelectNextUnit.triggered;
+        #else
+        return Input.GetKeyDown(KeyCode.Tab);
+        #endif
+    }
+
+    public bool SelectPreviousUnit()
+    {
+        #if USE_NEW_INPUT_SYSTEM
+        return playerInputActions.Player.SelectPreviousUnit.triggered;
+        #else
+        return Input.GetKeyDown(KeyCode.LeftShift);
+        #endif
+    }
+
+    public bool SelectNextAction()
+    {
+        #if USE_NEW_INPUT_SYSTEM
+        return playerInputActions.Player.SelectNextAction.triggered;
+        #else
+        return Input.GetKeyDown(KeyCode.ArrowRight);
+        #endif
+    }
+
+    public bool SelectPreviousAction()
+    {
+        #if USE_NEW_INPUT_SYSTEM
+        return playerInputActions.Player.SelectPreviousAction.triggered;
+        #else
+        return Input.GetKeyDown(KeyCode.ArrowLeft);
+        #endif
+    }
+
+    public bool EndTurn()
+    {
+        #if USE_NEW_INPUT_SYSTEM
+        return playerInputActions.Player.EndTurn.triggered;
+        #else
+        return Input.GetKeyDown(KeyCode.Enter);
+        #endif
+    }
 }

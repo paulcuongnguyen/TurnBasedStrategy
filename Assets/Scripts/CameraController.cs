@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using System;
 
 public class CameraController : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class CameraController : MonoBehaviour
         cinemachineTransposer = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineTransposer>();
         targetFollowOffset = cinemachineTransposer.m_FollowOffset;
     }
-
+    
     private void Update()
     {
         HandleMovement();
@@ -41,9 +42,7 @@ public class CameraController : MonoBehaviour
     {
         Vector3 rotationVector = new Vector3(0, 0, 0);
 
-        rotationVector.y = InputManager.Instance.GetCameraRotateAmount();
-
-        
+        rotationVector.y = InputManager.Instance.GetCameraRotateAmount();       
         
         float rotationSpeed = 100f;
         transform.eulerAngles += rotationVector * rotationSpeed * Time.deltaTime;
@@ -64,9 +63,12 @@ public class CameraController : MonoBehaviour
     {
         if (InputManager.Instance.IsMiddleMouseButtonDown())
         {
+            Vector3 selectedUnitTransform = UnitActionSystem.Instance.GetSelectedUnit().GetWorldPosition();
+        
+            transform.position = new Vector3(selectedUnitTransform.x, 0f, selectedUnitTransform.z);
+
             targetFollowOffset.y =10f;  
             transform.rotation = Quaternion.Euler(0, 0, 0);          
         }
     }
-
 }

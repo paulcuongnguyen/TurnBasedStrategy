@@ -65,11 +65,6 @@ public class GrenadeAction : BaseAction
                     //grid position is not walkable
                     continue;
                 }
-                if (!Pathfinding.Instance.HasPath(unitGridPosition, testGridPosition))
-                {
-                    //grid position is not reachable
-                    continue;
-                }
 
                 Vector3 shootDir = (LevelGrid.Instance.GetWorldPosition(testGridPosition) - transform.position);
                 float unitShoulderHeight = 1.7f;
@@ -79,14 +74,7 @@ public class GrenadeAction : BaseAction
                     //blocked by an obstacle
                     continue;
                 }
-                
-                // this below is excluded to allow unit to shoot anywhere, not just the grid occupied by enemy
-                // if (!LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
-                // {
-                //     //gridposition is empty
-                //     continue;
-                // }                
-
+                        
                 validGridPositionsList.Add(testGridPosition);
             }
         }
