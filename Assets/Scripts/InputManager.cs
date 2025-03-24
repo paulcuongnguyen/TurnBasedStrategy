@@ -162,4 +162,13 @@ public class InputManager : MonoBehaviour
         return Input.GetKeyDown(KeyCode.Enter);
         #endif
     }
+
+    public bool TakeAction()
+    {
+        #if USE_NEW_INPUT_SYSTEM
+        return playerInputActions.Player.TakeAction.triggered;
+        #else
+        return Input.GetKeyDown(KeyCode.Space);
+        #endif
+    }
 }

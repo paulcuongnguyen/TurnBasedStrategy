@@ -116,6 +116,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TakeAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""2adcd864-635e-4b51-bf04-284dda1ce5c2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -276,7 +285,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""82c6deac-c6cf-439e-95d7-774d3c526243"",
-                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -287,7 +296,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""f6f82c49-c2d4-4d4e-aaf3-d37c6f3f540d"",
-                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -320,7 +329,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""15823b0b-96b9-4461-b2ee-44d060036e02"",
-                    ""path"": ""<Gamepad>/rightStick/down"",
+                    ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -331,7 +340,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""95bd8584-8453-49d6-ab02-7464288cccdf"",
-                    ""path"": ""<Gamepad>/rightStick/up"",
+                    ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -419,7 +428,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fe9a6f1c-74e5-40cc-8e7f-41f59dbd5ece"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Keyboard>/v"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -441,7 +450,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""26bd79ad-acf8-49fc-baee-b508cbf34720"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -481,6 +490,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""EndTurn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a49decf5-7e13-4051-aa8f-820a4ae88ac6"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TakeAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""477f220b-0fe6-41ad-9433-842a60ee3aef"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TakeAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -499,6 +530,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_SelectNextAction = m_Player.FindAction("SelectNextAction", throwIfNotFound: true);
         m_Player_SelectPreviousAction = m_Player.FindAction("SelectPreviousAction", throwIfNotFound: true);
         m_Player_EndTurn = m_Player.FindAction("EndTurn", throwIfNotFound: true);
+        m_Player_TakeAction = m_Player.FindAction("TakeAction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -570,6 +602,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SelectNextAction;
     private readonly InputAction m_Player_SelectPreviousAction;
     private readonly InputAction m_Player_EndTurn;
+    private readonly InputAction m_Player_TakeAction;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -584,6 +617,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @SelectNextAction => m_Wrapper.m_Player_SelectNextAction;
         public InputAction @SelectPreviousAction => m_Wrapper.m_Player_SelectPreviousAction;
         public InputAction @EndTurn => m_Wrapper.m_Player_EndTurn;
+        public InputAction @TakeAction => m_Wrapper.m_Player_TakeAction;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -623,6 +657,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @EndTurn.started += instance.OnEndTurn;
             @EndTurn.performed += instance.OnEndTurn;
             @EndTurn.canceled += instance.OnEndTurn;
+            @TakeAction.started += instance.OnTakeAction;
+            @TakeAction.performed += instance.OnTakeAction;
+            @TakeAction.canceled += instance.OnTakeAction;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -657,6 +694,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @EndTurn.started -= instance.OnEndTurn;
             @EndTurn.performed -= instance.OnEndTurn;
             @EndTurn.canceled -= instance.OnEndTurn;
+            @TakeAction.started -= instance.OnTakeAction;
+            @TakeAction.performed -= instance.OnTakeAction;
+            @TakeAction.canceled -= instance.OnTakeAction;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -686,5 +726,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnSelectNextAction(InputAction.CallbackContext context);
         void OnSelectPreviousAction(InputAction.CallbackContext context);
         void OnEndTurn(InputAction.CallbackContext context);
+        void OnTakeAction(InputAction.CallbackContext context);
     }
 }

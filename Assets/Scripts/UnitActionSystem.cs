@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using System.Linq;
 
 public class UnitActionSystem : MonoBehaviour
 {
@@ -15,9 +16,10 @@ public class UnitActionSystem : MonoBehaviour
     
     [SerializeField] private Unit selectedUnit;
     [SerializeField] private LayerMask unitLayerMask;
-    
+    private GridPosition selectedGridPosition;
     private BaseAction selectedAction;
     private bool isBusy;
+    private int selectedGridPositionIndex = 0; // Track the current grid position index
 
     private void Awake()
     {        
@@ -48,48 +50,64 @@ public class UnitActionSystem : MonoBehaviour
 
         AutoSelectUnit();      
                                
-        HandleSelectedAction();        
+        HandleSelectedAction(); 
+
+        SwitchSelectedGridPosition();
+
+        HandleButtonSelectedAction();              
 
         SwitchUnit();
 
         SwitchAction();
     }
 
+    //this will be used for taking action by pressing mouse button
     private void HandleSelectedAction()
     {
         if (InputManager.Instance.IsMouseButtonDownThisFrame())
         {
-            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
+            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition()); //get the grid position of the mouse click
 
-            if (!selectedAction.IsValidActionGridPosition(mouseGridPosition))
+            if (!selectedAction.IsValidActionGridPosition(mouseGridPosition)) //check if the grid position is valid for the selected action
             {
                 return;            
             }          
            
-            if (!selectedUnit.TrySpendActionPointsToTakeAction(selectedAction))
+            if (!selectedUnit.TrySpendActionPointsToTakeAction(selectedAction)) //check if the unit has enough action points to take action
             {
                 return;
             }    
             
-            SetBusy();
-            selectedAction.TakeAction(mouseGridPosition, ClearBusy);  
+            SetBusy(); //set busy on the action bar at the bottom of the screen
+            selectedAction.TakeAction(mouseGridPosition, ClearBusy); //take action on the selected grid position, then clear busy for the action bar  
 
-            OnActionStarted?.Invoke(this, EventArgs.Empty);
+            OnActionStarted?.Invoke(this, EventArgs.Empty); //set action started event to update UI, action points, etc.
+        }        
+    }
+
+    //this will be used for taking action by pressing button on controller or keyboard
+    private void HandleButtonSelectedAction()
+    {
+        if (InputManager.Instance.TakeAction())
+        {  
+            if (selectedAction.GetValidActionGridPositionList().Count == 0)
+            {
+                return;
+            }
+            if (selectedGridPosition == null)
+            {
+                return;
+            }
+
+            // selectedGridPosition = selectedAction.GetValidActionGridPositionList()[0]; 
+            
+            SetBusy(); //set busy on the action bar at the bottom of the screen
+            selectedAction.TakeAction(selectedGridPosition, ClearBusy); //take action on the selected grid position, then clear busy for the action bar 
+
+            OnActionStarted?.Invoke(this, EventArgs.Empty); //set action started event to update UI, action points, etc.
         }
     }
-
-    private void SetBusy()
-    {
-        isBusy = true;
-        OnBusyChanged?.Invoke(this, isBusy);
-    }
-
-    private void ClearBusy()
-    {
-        isBusy = false;
-        OnBusyChanged?.Invoke(this, isBusy);
-    }
-
+   
     private bool TryHandleUnitSelection()
     {
         if (InputManager.Instance.IsMouseButtonDownThisFrame())
@@ -169,7 +187,19 @@ public class UnitActionSystem : MonoBehaviour
             SetSelectedAction(baseActionList[previousIndex]);
         }
     }
+    
+    private void SetBusy()
+    {
+        isBusy = true;
+        OnBusyChanged?.Invoke(this, isBusy);
+    }
 
+    private void ClearBusy()
+    {
+        isBusy = false;
+        OnBusyChanged?.Invoke(this, isBusy);
+    }
+    
     public Unit GetSelectedUnit()
     {
         return selectedUnit;
@@ -186,4 +216,89 @@ public class UnitActionSystem : MonoBehaviour
     {
         return selectedAction;
     }    
+
+    private void SwitchSelectedGridPosition()
+    {
+        List<GridPosition> validGridPositions = selectedAction.GetValidActionGridPositionList();
+
+        // Return early if the list is empty
+        if (validGridPositions == null || validGridPositions.Count == 0)
+        {
+            Debug.LogWarning("No valid grid positions available.");
+            return;
+        }
+
+        // Clamp the index to ensure it's within bounds
+        selectedGridPositionIndex = Mathf.Clamp(selectedGridPositionIndex, 0, validGridPositions.Count - 1);
+
+        // Get the current grid position
+        GridPosition currentGridPosition = validGridPositions[selectedGridPositionIndex];
+
+        // Handle arrow key input
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            // Find the next grid position with a higher z value
+            GridPosition? nextPosition = validGridPositions
+                .Where(pos => pos.z > currentGridPosition.z && pos.x == currentGridPosition.x)
+                .OrderBy(pos => pos.z)
+                .FirstOrDefault();
+
+            if (nextPosition != null)
+            {
+                selectedGridPositionIndex = validGridPositions.IndexOf(nextPosition.Value);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            // Find the next grid position with a lower z value
+            GridPosition? nextPosition = validGridPositions
+                .Where(pos => pos.z < currentGridPosition.z && pos.x == currentGridPosition.x)
+                .OrderByDescending(pos => pos.z)
+                .FirstOrDefault();
+
+            if (nextPosition != null)
+            {
+                selectedGridPositionIndex = validGridPositions.IndexOf(nextPosition.Value);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            // Find the next grid position with a higher x value
+            GridPosition? nextPosition = validGridPositions
+                .Where(pos => pos.x > currentGridPosition.x && pos.z == currentGridPosition.z)
+                .OrderBy(pos => pos.x)
+                .FirstOrDefault();
+
+            if (nextPosition != null)
+            {
+                selectedGridPositionIndex = validGridPositions.IndexOf(nextPosition.Value);
+            }
+            else
+            {
+                Debug.Log("No valid grid position to the right.");
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            // Find the next grid position with a lower x value
+            GridPosition? nextPosition = validGridPositions
+                .Where(pos => pos.x < currentGridPosition.x && pos.z == currentGridPosition.z)
+                .OrderByDescending(pos => pos.x)
+                .FirstOrDefault();
+
+            if (nextPosition != null)
+            {
+                selectedGridPositionIndex = validGridPositions.IndexOf(nextPosition.Value);
+            }
+            else
+            {
+                Debug.Log("No valid grid position to the left.");
+            }
+        }
+
+        // Update the selected grid position
+        selectedGridPosition = validGridPositions[selectedGridPositionIndex];
+        Debug.Log($"Selected Grid Position: {selectedGridPosition}");
+    }
+
 }
