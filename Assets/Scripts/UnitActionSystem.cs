@@ -16,6 +16,10 @@ public class UnitActionSystem : MonoBehaviour
     
     [SerializeField] private Unit selectedUnit;
     [SerializeField] private LayerMask unitLayerMask;
+    [SerializeField] private GameObject gridPositionMarkerPrefab;
+
+    private bool isMouseOverValidGridPosition = false; // Tracks if the mouse is over a valid grid position
+    private GameObject gridPositionMarkerInstance;
     private GridPosition selectedGridPosition;
     private BaseAction selectedAction;
     private bool isBusy;
@@ -35,6 +39,13 @@ public class UnitActionSystem : MonoBehaviour
     private void Start()
     {
         SetSelectedUnit(selectedUnit);
+
+        // Instantiate the marker at the start
+        if (gridPositionMarkerPrefab != null)
+        {
+            gridPositionMarkerInstance = Instantiate(gridPositionMarkerPrefab);
+            gridPositionMarkerInstance.SetActive(false); // Hide it initially
+        }
     }
 
     private void Update()
@@ -61,28 +72,45 @@ public class UnitActionSystem : MonoBehaviour
         SwitchAction();
     }
 
-    //this will be used for taking action by pressing mouse button
+    //this will be used for choosing and taking action by pressing mouse button
     private void HandleSelectedAction()
     {
+        GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition()); // Get the grid position of the mouse
+
+        // Check if the mouse is over a valid grid position
+        if (selectedAction.IsValidActionGridPosition(mouseGridPosition))
+        {
+            isMouseOverValidGridPosition = true; // Mouse is over a valid grid position
+            selectedGridPosition = mouseGridPosition;
+            UpdateGridPositionMarker(); // Update the marker to the hovered grid position
+        }
+        else
+        {
+            isMouseOverValidGridPosition = false; // Mouse is not over a valid grid position
+            if (gridPositionMarkerInstance != null)
+            {
+                gridPositionMarkerInstance.SetActive(false); // Hide the marker if the position is invalid
+            }
+        }
+
+        // Handle mouse click for taking action
         if (InputManager.Instance.IsMouseButtonDownThisFrame())
         {
-            GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition()); //get the grid position of the mouse click
-
-            if (!selectedAction.IsValidActionGridPosition(mouseGridPosition)) //check if the grid position is valid for the selected action
-            {
-                return;            
-            }          
-           
-            if (!selectedUnit.TrySpendActionPointsToTakeAction(selectedAction)) //check if the unit has enough action points to take action
+            if (!selectedAction.IsValidActionGridPosition(mouseGridPosition)) // Check if the grid position is valid for the selected action
             {
                 return;
-            }    
-            
-            SetBusy(); //set busy on the action bar at the bottom of the screen
-            selectedAction.TakeAction(mouseGridPosition, ClearBusy); //take action on the selected grid position, then clear busy for the action bar  
+            }
 
-            OnActionStarted?.Invoke(this, EventArgs.Empty); //set action started event to update UI, action points, etc.
-        }        
+            if (!selectedUnit.TrySpendActionPointsToTakeAction(selectedAction)) // Use action points to take action
+            {
+                return;
+            }
+
+            SetBusy(); // Set busy on the action bar at the bottom of the screen
+            selectedAction.TakeAction(mouseGridPosition, ClearBusy); // Take action on the selected grid position, then clear busy for the action bar
+
+            OnActionStarted?.Invoke(this, EventArgs.Empty); // Set action started event to update UI, action points, etc.
+        }
     }
 
     //this will be used for taking action by pressing button on controller or keyboard
@@ -95,6 +123,10 @@ public class UnitActionSystem : MonoBehaviour
                 return;
             }
             if (selectedGridPosition == null)
+            {
+                return;
+            }
+            if (!selectedUnit.TrySpendActionPointsToTakeAction(selectedAction)) // Use action points to take action
             {
                 return;
             }
@@ -219,12 +251,18 @@ public class UnitActionSystem : MonoBehaviour
 
     private void SwitchSelectedGridPosition()
     {
+        // Skip updating the marker if the mouse is over a valid grid position
+        if (isMouseOverValidGridPosition) return;
         List<GridPosition> validGridPositions = selectedAction.GetValidActionGridPositionList();
 
         // Return early if the list is empty
         if (validGridPositions == null || validGridPositions.Count == 0)
         {
             Debug.LogWarning("No valid grid positions available.");
+            if (gridPositionMarkerInstance != null)
+            {
+                gridPositionMarkerInstance.SetActive(false); // Hide the marker if no valid positions
+            }
             return;
         }
 
@@ -298,7 +336,24 @@ public class UnitActionSystem : MonoBehaviour
 
         // Update the selected grid position
         selectedGridPosition = validGridPositions[selectedGridPositionIndex];
-        Debug.Log($"Selected Grid Position: {selectedGridPosition}");
+        // Debug.Log($"Selected Grid Position: {selectedGridPosition}");
+
+        // Update the marker position
+        UpdateGridPositionMarker();
+    }
+
+    private void UpdateGridPositionMarker()
+    {
+        if (gridPositionMarkerInstance == null) return;
+
+        // Convert the selected grid position to world position
+        Vector3 worldPosition = LevelGrid.Instance.GetWorldPosition(selectedGridPosition);
+
+        // Move the marker to the selected grid position
+        gridPositionMarkerInstance.transform.position = worldPosition;
+
+        // Ensure the marker is active
+        gridPositionMarkerInstance.SetActive(true);
     }
 
 }

@@ -29,7 +29,7 @@ public class UnitActionSystemUI : MonoBehaviour
         UpdateSelectedVisual();
         UpdateActionPoints();
     }
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -72,12 +72,7 @@ public class UnitActionSystemUI : MonoBehaviour
     private void UnitActionSystem_OnActionStarted(object sender, EventArgs empty)
     {        
         UpdateActionPoints();
-    }
-
-    private void UnitActionSystem_OnButtonActionStarted(object sender, EventArgs e)
-    {
-        UpdateActionPoints();
-    }
+    }    
 
     private void TurnSystem_OnTurnChanged(object sender, EventArgs empty)
     {
@@ -94,10 +89,8 @@ public class UnitActionSystemUI : MonoBehaviour
     }
 
     private void UpdateActionPoints()
-    {        
+    {               
         Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
         actionPointsText.text = "Action Points: " + selectedUnit.GetActionPoints(); 
     }
-
-
 }

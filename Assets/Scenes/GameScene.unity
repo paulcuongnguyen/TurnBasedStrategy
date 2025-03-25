@@ -2792,6 +2792,8 @@ MonoBehaviour:
   unitLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  gridPositionMarkerPrefab: {fileID: 9188437037644207265, guid: 3ec9de53b0b07d742b6a91012f9e24bc,
+    type: 3}
 --- !u!4 &1161782366
 Transform:
   m_ObjectHideFlags: 0
