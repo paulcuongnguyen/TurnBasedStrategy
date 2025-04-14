@@ -44,7 +44,14 @@ public class UnitActionSystem : MonoBehaviour
         if (gridPositionMarkerPrefab != null)
         {
             gridPositionMarkerInstance = Instantiate(gridPositionMarkerPrefab);
-            gridPositionMarkerInstance.SetActive(false); // Hide it initially
+            gridPositionMarkerInstance.SetActive(false);
+            
+            // // Initial position setup if we have a valid selected position
+            // if (selectedAction != null && selectedAction.GetValidActionGridPositionList().Count > 0)
+            // {
+            //     selectedGridPosition = selectedAction.GetValidActionGridPositionList()[0];
+            //     UpdateGridPositionMarker();
+            // }
         }
     }
 
@@ -63,34 +70,39 @@ public class UnitActionSystem : MonoBehaviour
                                
         HandleSelectedAction(); 
 
+        
         SwitchSelectedGridPosition();
+        
 
         HandleButtonSelectedAction();              
 
         SwitchUnit();
 
         SwitchAction();
+
+        UpdateGridPositionMarker();
     }
 
     //this will be used for choosing and taking action by pressing mouse button
     private void HandleSelectedAction()
     {
-        GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition()); // Get the grid position of the mouse
+        if (selectedAction == null) return;
+
+        GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseWorld.GetPosition());
 
         // Check if the mouse is over a valid grid position
-        if (selectedAction.IsValidActionGridPosition(mouseGridPosition))
+        bool isValidPosition = selectedAction.IsValidActionGridPosition(mouseGridPosition);
+        isMouseOverValidGridPosition = isValidPosition;
+
+        if (isValidPosition)
         {
-            isMouseOverValidGridPosition = true; // Mouse is over a valid grid position
             selectedGridPosition = mouseGridPosition;
-            UpdateGridPositionMarker(); // Update the marker to the hovered grid position
+            UpdateGridPositionMarker();
         }
-        else
+        else if (gridPositionMarkerInstance != null && isMouseOverValidGridPosition)
         {
-            isMouseOverValidGridPosition = false; // Mouse is not over a valid grid position
-            if (gridPositionMarkerInstance != null)
-            {
-                gridPositionMarkerInstance.SetActive(false); // Hide the marker if the position is invalid
-            }
+            // Only hide the marker if we're transitioning from valid to invalid position
+            gridPositionMarkerInstance.SetActive(false);
         }
 
         // Handle mouse click for taking action
@@ -210,6 +222,8 @@ public class UnitActionSystem : MonoBehaviour
             int currentIndex = baseActionList.IndexOf(selectedAction);
             int nextIndex = (currentIndex + 1) % baseActionList.Count;
             SetSelectedAction(baseActionList[nextIndex]);
+            selectedGridPositionIndex = 0; // Reset the grid position index when switching actions
+            selectedGridPosition = baseActionList[nextIndex].GetValidActionGridPositionList()[0]; // Reset the grid position to the first valid position of the new action
         }        
         if (InputManager.Instance.SelectPreviousAction())
         {
@@ -217,6 +231,9 @@ public class UnitActionSystem : MonoBehaviour
             int currentIndex = baseActionList.IndexOf(selectedAction);
             int previousIndex = (currentIndex - 1 + baseActionList.Count) % baseActionList.Count;
             SetSelectedAction(baseActionList[previousIndex]);
+            selectedGridPositionIndex = 0; // Reset the grid position index when switching actions
+            selectedGridPosition = baseActionList[previousIndex].GetValidActionGridPositionList()[0]; // Reset the grid position to the first valid position of the new action
+
         }
     }
     
@@ -240,7 +257,6 @@ public class UnitActionSystem : MonoBehaviour
     public void SetSelectedAction(BaseAction baseAction)
     {
         selectedAction = baseAction;
-
         OnSelectedActionChanged?.Invoke(this, EventArgs.Empty);
     }
 
@@ -253,98 +269,87 @@ public class UnitActionSystem : MonoBehaviour
     {
         // Skip updating the marker if the mouse is over a valid grid position
         if (isMouseOverValidGridPosition) return;
+
         List<GridPosition> validGridPositions = selectedAction.GetValidActionGridPositionList();
 
-        // Return early if the list is empty
         if (validGridPositions == null || validGridPositions.Count == 0)
         {
-            Debug.LogWarning("No valid grid positions available.");
             if (gridPositionMarkerInstance != null)
             {
-                gridPositionMarkerInstance.SetActive(false); // Hide the marker if no valid positions
+                gridPositionMarkerInstance.SetActive(false);
             }
             return;
         }
 
-        // Clamp the index to ensure it's within bounds
+        // Ensure index is within bounds
         selectedGridPositionIndex = Mathf.Clamp(selectedGridPositionIndex, 0, validGridPositions.Count - 1);
-
-        // Get the current grid position
         GridPosition currentGridPosition = validGridPositions[selectedGridPositionIndex];
+        int previousIndex = selectedGridPositionIndex; // Store previous index
 
-        // Handle arrow key input
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            // Find the next grid position with a higher z value
-            GridPosition? nextPosition = validGridPositions
+            var nextPositions = validGridPositions
                 .Where(pos => pos.z > currentGridPosition.z && pos.x == currentGridPosition.x)
-                .OrderBy(pos => pos.z)
-                .FirstOrDefault();
+                .OrderBy(pos => pos.z);
 
-            if (nextPosition != null)
+            if (nextPositions.Any())
             {
-                selectedGridPositionIndex = validGridPositions.IndexOf(nextPosition.Value);
+                selectedGridPositionIndex = validGridPositions.IndexOf(nextPositions.First());
             }
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            // Find the next grid position with a lower z value
-            GridPosition? nextPosition = validGridPositions
+            var nextPositions = validGridPositions
                 .Where(pos => pos.z < currentGridPosition.z && pos.x == currentGridPosition.x)
-                .OrderByDescending(pos => pos.z)
-                .FirstOrDefault();
+                .OrderByDescending(pos => pos.z);
 
-            if (nextPosition != null)
+            if (nextPositions.Any())
             {
-                selectedGridPositionIndex = validGridPositions.IndexOf(nextPosition.Value);
+                selectedGridPositionIndex = validGridPositions.IndexOf(nextPositions.First());
             }
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            // Find the next grid position with a higher x value
-            GridPosition? nextPosition = validGridPositions
+            var nextPositions = validGridPositions
                 .Where(pos => pos.x > currentGridPosition.x && pos.z == currentGridPosition.z)
-                .OrderBy(pos => pos.x)
-                .FirstOrDefault();
+                .OrderBy(pos => pos.x);
 
-            if (nextPosition != null)
+            if (nextPositions.Any())
             {
-                selectedGridPositionIndex = validGridPositions.IndexOf(nextPosition.Value);
-            }
-            else
-            {
-                Debug.Log("No valid grid position to the right.");
+                selectedGridPositionIndex = validGridPositions.IndexOf(nextPositions.First());
             }
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            // Find the next grid position with a lower x value
-            GridPosition? nextPosition = validGridPositions
+            var nextPositions = validGridPositions
                 .Where(pos => pos.x < currentGridPosition.x && pos.z == currentGridPosition.z)
-                .OrderByDescending(pos => pos.x)
-                .FirstOrDefault();
+                .OrderByDescending(pos => pos.x);
 
-            if (nextPosition != null)
+            if (nextPositions.Any())
             {
-                selectedGridPositionIndex = validGridPositions.IndexOf(nextPosition.Value);
-            }
-            else
-            {
-                Debug.Log("No valid grid position to the left.");
+                selectedGridPositionIndex = validGridPositions.IndexOf(nextPositions.First());
             }
         }
 
-        // Update the selected grid position
-        selectedGridPosition = validGridPositions[selectedGridPositionIndex];
-        // Debug.Log($"Selected Grid Position: {selectedGridPosition}");
-
-        // Update the marker position
-        UpdateGridPositionMarker();
+        // Only update if the index actually changed
+        if (selectedGridPositionIndex != previousIndex)
+        {
+            selectedGridPosition = validGridPositions[selectedGridPositionIndex];
+            UpdateGridPositionMarker();
+        }
     }
 
     private void UpdateGridPositionMarker()
     {
         if (gridPositionMarkerInstance == null) return;
+
+        if (selectedAction == null) return;
+
+        if (selectedAction.GetValidActionGridPositionList().Count == 0)
+        {
+            gridPositionMarkerInstance.SetActive(false);
+            return;
+        }
 
         // Convert the selected grid position to world position
         Vector3 worldPosition = LevelGrid.Instance.GetWorldPosition(selectedGridPosition);
