@@ -66,19 +66,19 @@ public class UnitActionSystem : MonoBehaviour
         // check if that mouseclick is to select a unit, if it is true, then do not move unit, only move after unit already be selected
         if (TryHandleUnitSelection()) return;    
 
+        UpdateSelectedGridPosition();
+
         AutoSelectUnit();      
                                
         HandleSelectedAction(); 
-
         
         SwitchSelectedGridPosition();
         
-
         HandleButtonSelectedAction();              
 
         SwitchUnit();
 
-        SwitchAction();
+        SwitchAction();        
 
         UpdateGridPositionMarker();
     }
@@ -129,7 +129,7 @@ public class UnitActionSystem : MonoBehaviour
     private void HandleButtonSelectedAction()
     {
         if (InputManager.Instance.TakeAction())
-        {  
+        {
             if (selectedAction.GetValidActionGridPositionList().Count == 0)
             {
                 return;
@@ -143,15 +143,26 @@ public class UnitActionSystem : MonoBehaviour
                 return;
             }
 
-            // selectedGridPosition = selectedAction.GetValidActionGridPositionList()[0]; 
-            
             SetBusy(); //set busy on the action bar at the bottom of the screen
             selectedAction.TakeAction(selectedGridPosition, ClearBusy); //take action on the selected grid position, then clear busy for the action bar 
-
             OnActionStarted?.Invoke(this, EventArgs.Empty); //set action started event to update UI, action points, etc.
         }
     }
-   
+
+    private void UpdateSelectedGridPosition()
+    {
+        List<GridPosition> validGridPositionList = selectedAction.GetValidActionGridPositionList();
+        // Check if current selectedGridPosition is still valid
+        if (!validGridPositionList.Contains(selectedGridPosition))
+        {
+            // Update to first valid position
+            if (validGridPositionList.Count == 0) return;
+            selectedGridPosition = validGridPositionList[0];
+            selectedGridPositionIndex = 0;                       
+        }        
+    }
+
+
     private bool TryHandleUnitSelection()
     {
         if (InputManager.Instance.IsMouseButtonDownThisFrame())
@@ -204,6 +215,9 @@ public class UnitActionSystem : MonoBehaviour
             int currentIndex = friendlyUnitList.IndexOf(selectedUnit);
             int nextIndex = (currentIndex + 1) % friendlyUnitList.Count;
             SetSelectedUnit(friendlyUnitList[nextIndex]);
+            selectedGridPositionIndex = 0; // Reset the grid position index when switching actions
+            selectedGridPosition = friendlyUnitList[nextIndex].GetAction<MoveAction>().GetValidActionGridPositionList()[0]; // Reset the grid position to the first valid position of the new action
+            UpdateGridPositionMarker();
         }
         if (InputManager.Instance.SelectPreviousUnit())
         {
@@ -211,29 +225,49 @@ public class UnitActionSystem : MonoBehaviour
             int currentIndex = friendlyUnitList.IndexOf(selectedUnit);
             int previousIndex = (currentIndex - 1 + friendlyUnitList.Count) % friendlyUnitList.Count;
             SetSelectedUnit(friendlyUnitList[previousIndex]);
+            selectedGridPositionIndex = 0; // Reset the grid position index when switching actions
+            selectedGridPosition = friendlyUnitList[previousIndex].GetAction<MoveAction>().GetValidActionGridPositionList()[0]; // Reset the grid position to the first valid position of the new action
+            UpdateGridPositionMarker();
         }
     }
 
     private void SwitchAction()
-    {
+    {      
         if (InputManager.Instance.SelectNextAction())
         {
             List<BaseAction> baseActionList = new List<BaseAction>(selectedUnit.GetBaseActionArray());
             int currentIndex = baseActionList.IndexOf(selectedAction);
             int nextIndex = (currentIndex + 1) % baseActionList.Count;
-            SetSelectedAction(baseActionList[nextIndex]);
-            selectedGridPositionIndex = 0; // Reset the grid position index when switching actions
-            selectedGridPosition = baseActionList[nextIndex].GetValidActionGridPositionList()[0]; // Reset the grid position to the first valid position of the new action
+            BaseAction nextAction = baseActionList[nextIndex];        
+            
+            SetSelectedAction(nextAction);
+            
+            // Try to set valid grid position if available
+            List<GridPosition> validPositions = nextAction.GetValidActionGridPositionList();
+            if (validPositions.Count > 0)
+            {
+                selectedGridPositionIndex = 0;
+                selectedGridPosition = validPositions[0];
+                UpdateGridPositionMarker();
+            }
         }        
         if (InputManager.Instance.SelectPreviousAction())
         {
             List<BaseAction> baseActionList = new List<BaseAction>(selectedUnit.GetBaseActionArray());
             int currentIndex = baseActionList.IndexOf(selectedAction);
             int previousIndex = (currentIndex - 1 + baseActionList.Count) % baseActionList.Count;
-            SetSelectedAction(baseActionList[previousIndex]);
-            selectedGridPositionIndex = 0; // Reset the grid position index when switching actions
-            selectedGridPosition = baseActionList[previousIndex].GetValidActionGridPositionList()[0]; // Reset the grid position to the first valid position of the new action
+            BaseAction previousAction = baseActionList[previousIndex];
 
+            SetSelectedAction(previousAction);
+            
+            // Try to set valid grid position if available
+            List<GridPosition> validPositions = previousAction.GetValidActionGridPositionList();
+            if (validPositions.Count > 0)
+            {
+                selectedGridPositionIndex = 0;
+                selectedGridPosition = validPositions[0];
+                UpdateGridPositionMarker();
+            }
         }
     }
     
@@ -345,7 +379,7 @@ public class UnitActionSystem : MonoBehaviour
 
         if (selectedAction == null) return;
 
-        if (selectedAction.GetValidActionGridPositionList().Count == 0)
+        if (selectedAction.GetValidActionGridPositionList().Count <= 0)
         {
             gridPositionMarkerInstance.SetActive(false);
             return;
