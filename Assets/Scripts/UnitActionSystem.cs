@@ -320,7 +320,7 @@ public class UnitActionSystem : MonoBehaviour
         GridPosition currentGridPosition = validGridPositions[selectedGridPositionIndex];
         int previousIndex = selectedGridPositionIndex; // Store previous index
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (InputManager.Instance.GridSelectionUp())
         {
             var nextPositions = validGridPositions
                 .Where(pos => pos.z > currentGridPosition.z && pos.x == currentGridPosition.x)
@@ -331,7 +331,7 @@ public class UnitActionSystem : MonoBehaviour
                 selectedGridPositionIndex = validGridPositions.IndexOf(nextPositions.First());
             }
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (InputManager.Instance.GridSelectionDown())
         {
             var nextPositions = validGridPositions
                 .Where(pos => pos.z < currentGridPosition.z && pos.x == currentGridPosition.x)
@@ -342,7 +342,7 @@ public class UnitActionSystem : MonoBehaviour
                 selectedGridPositionIndex = validGridPositions.IndexOf(nextPositions.First());
             }
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (InputManager.Instance.GridSelectionRight())
         {
             var nextPositions = validGridPositions
                 .Where(pos => pos.x > currentGridPosition.x && pos.z == currentGridPosition.z)
@@ -353,7 +353,7 @@ public class UnitActionSystem : MonoBehaviour
                 selectedGridPositionIndex = validGridPositions.IndexOf(nextPositions.First());
             }
         }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (InputManager.Instance.GridSelectionLeft())
         {
             var nextPositions = validGridPositions
                 .Where(pos => pos.x < currentGridPosition.x && pos.z == currentGridPosition.z)

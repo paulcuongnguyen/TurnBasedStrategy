@@ -171,4 +171,40 @@ public class InputManager : MonoBehaviour
         return Input.GetKeyDown(KeyCode.Space);
         #endif
     }
+
+    public bool GridSelectionUp()
+    {
+        #if USE_NEW_INPUT_SYSTEM
+        return playerInputActions.Player.GridSelectionUp.triggered;
+        #else
+        return Input.GetKeyDown(KeyCode.UpArrow);
+        #endif
+    }
+
+    public bool GridSelectionDown()
+    {
+        #if USE_NEW_INPUT_SYSTEM
+        return playerInputActions.Player.GridSelectionDown.triggered;
+        #else
+        return Input.GetKeyDown(KeyCode.UpArrow);
+        #endif
+    }
+
+    public bool GridSelectionLeft()
+    {
+        #if USE_NEW_INPUT_SYSTEM
+        return playerInputActions.Player.GridSelectionLeft.triggered;
+        #else
+        return Input.GetKeyDown(KeyCode.UpArrow);
+        #endif
+    }
+
+    public bool GridSelectionRight()
+    {
+        #if USE_NEW_INPUT_SYSTEM
+        return playerInputActions.Player.GridSelectionRight.triggered;
+        #else
+        return Input.GetKeyDown(KeyCode.UpArrow);
+        #endif
+    }
 }

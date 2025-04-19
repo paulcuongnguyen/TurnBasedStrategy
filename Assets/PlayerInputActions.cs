@@ -125,6 +125,42 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GridSelectionUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""76a023fd-b81e-45e4-b6fb-a182997a8918"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GridSelectionDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f55e166-6726-49e2-9881-bce2cff809fb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GridSelectionLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""f3f101b4-e71e-45c8-a7f6-967c0aa9a20c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GridSelectionRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""9df0a4f4-43a5-413a-8405-3740e2551590"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -285,7 +321,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""82c6deac-c6cf-439e-95d7-774d3c526243"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -296,7 +332,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""f6f82c49-c2d4-4d4e-aaf3-d37c6f3f540d"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -329,7 +365,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""15823b0b-96b9-4461-b2ee-44d060036e02"",
-                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -340,7 +376,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""95bd8584-8453-49d6-ab02-7464288cccdf"",
-                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""path"": ""<Gamepad>/rightStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -439,7 +475,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8619ddaf-29e5-4ebd-9ff8-f71a279e4eb1"",
-                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -461,7 +497,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fa97605a-095e-4ec5-bcc7-59a8895c01f8"",
-                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -512,6 +548,94 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""TakeAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""75794818-876b-4d18-a427-965e915a9177"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GridSelectionUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06dcf017-2d2b-4a6f-b906-a9fa3a8fe43c"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GridSelectionUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8cee6420-7e0a-4c36-939d-8da0150ac1ca"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GridSelectionDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""df9e7c0a-2e34-4773-ba45-2adfca01d4e6"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GridSelectionDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6039b49-08ac-4a2e-8e71-f7569e41bafd"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GridSelectionLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a7086f9-de52-4d63-935d-cd44a217757e"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GridSelectionLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9fe78ac0-e214-4efe-a5d4-c2364d7dc8bf"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GridSelectionRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2dd2ada9-de80-408c-be58-5857b589bc5b"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GridSelectionRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -531,6 +655,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_SelectPreviousAction = m_Player.FindAction("SelectPreviousAction", throwIfNotFound: true);
         m_Player_EndTurn = m_Player.FindAction("EndTurn", throwIfNotFound: true);
         m_Player_TakeAction = m_Player.FindAction("TakeAction", throwIfNotFound: true);
+        m_Player_GridSelectionUp = m_Player.FindAction("GridSelectionUp", throwIfNotFound: true);
+        m_Player_GridSelectionDown = m_Player.FindAction("GridSelectionDown", throwIfNotFound: true);
+        m_Player_GridSelectionLeft = m_Player.FindAction("GridSelectionLeft", throwIfNotFound: true);
+        m_Player_GridSelectionRight = m_Player.FindAction("GridSelectionRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -603,6 +731,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SelectPreviousAction;
     private readonly InputAction m_Player_EndTurn;
     private readonly InputAction m_Player_TakeAction;
+    private readonly InputAction m_Player_GridSelectionUp;
+    private readonly InputAction m_Player_GridSelectionDown;
+    private readonly InputAction m_Player_GridSelectionLeft;
+    private readonly InputAction m_Player_GridSelectionRight;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -618,6 +750,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @SelectPreviousAction => m_Wrapper.m_Player_SelectPreviousAction;
         public InputAction @EndTurn => m_Wrapper.m_Player_EndTurn;
         public InputAction @TakeAction => m_Wrapper.m_Player_TakeAction;
+        public InputAction @GridSelectionUp => m_Wrapper.m_Player_GridSelectionUp;
+        public InputAction @GridSelectionDown => m_Wrapper.m_Player_GridSelectionDown;
+        public InputAction @GridSelectionLeft => m_Wrapper.m_Player_GridSelectionLeft;
+        public InputAction @GridSelectionRight => m_Wrapper.m_Player_GridSelectionRight;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -660,6 +796,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @TakeAction.started += instance.OnTakeAction;
             @TakeAction.performed += instance.OnTakeAction;
             @TakeAction.canceled += instance.OnTakeAction;
+            @GridSelectionUp.started += instance.OnGridSelectionUp;
+            @GridSelectionUp.performed += instance.OnGridSelectionUp;
+            @GridSelectionUp.canceled += instance.OnGridSelectionUp;
+            @GridSelectionDown.started += instance.OnGridSelectionDown;
+            @GridSelectionDown.performed += instance.OnGridSelectionDown;
+            @GridSelectionDown.canceled += instance.OnGridSelectionDown;
+            @GridSelectionLeft.started += instance.OnGridSelectionLeft;
+            @GridSelectionLeft.performed += instance.OnGridSelectionLeft;
+            @GridSelectionLeft.canceled += instance.OnGridSelectionLeft;
+            @GridSelectionRight.started += instance.OnGridSelectionRight;
+            @GridSelectionRight.performed += instance.OnGridSelectionRight;
+            @GridSelectionRight.canceled += instance.OnGridSelectionRight;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -697,6 +845,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @TakeAction.started -= instance.OnTakeAction;
             @TakeAction.performed -= instance.OnTakeAction;
             @TakeAction.canceled -= instance.OnTakeAction;
+            @GridSelectionUp.started -= instance.OnGridSelectionUp;
+            @GridSelectionUp.performed -= instance.OnGridSelectionUp;
+            @GridSelectionUp.canceled -= instance.OnGridSelectionUp;
+            @GridSelectionDown.started -= instance.OnGridSelectionDown;
+            @GridSelectionDown.performed -= instance.OnGridSelectionDown;
+            @GridSelectionDown.canceled -= instance.OnGridSelectionDown;
+            @GridSelectionLeft.started -= instance.OnGridSelectionLeft;
+            @GridSelectionLeft.performed -= instance.OnGridSelectionLeft;
+            @GridSelectionLeft.canceled -= instance.OnGridSelectionLeft;
+            @GridSelectionRight.started -= instance.OnGridSelectionRight;
+            @GridSelectionRight.performed -= instance.OnGridSelectionRight;
+            @GridSelectionRight.canceled -= instance.OnGridSelectionRight;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -727,5 +887,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnSelectPreviousAction(InputAction.CallbackContext context);
         void OnEndTurn(InputAction.CallbackContext context);
         void OnTakeAction(InputAction.CallbackContext context);
+        void OnGridSelectionUp(InputAction.CallbackContext context);
+        void OnGridSelectionDown(InputAction.CallbackContext context);
+        void OnGridSelectionLeft(InputAction.CallbackContext context);
+        void OnGridSelectionRight(InputAction.CallbackContext context);
     }
 }
