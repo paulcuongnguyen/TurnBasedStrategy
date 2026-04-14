@@ -4,4 +4,4 @@
 
 with gun, nade and blade
 
-place your steps wisely 
+let your steps wisely placed
